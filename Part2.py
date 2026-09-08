@@ -102,8 +102,9 @@ y_grid = np.arange(0, 1 + grid_size, grid_size)
 x_grid, y_grid = np.meshgrid(x_grid, y_grid)
 z_grid = mountain_function(x_grid, y_grid)
 
-# Initialize water volume grid
-water_volume = np.zeros_like(x_grid)
+# Initialize water volume grid: one entry per cell, not per grid line
+n_cells = x_grid.shape[0] - 1
+water_volume = np.zeros((n_cells, n_cells))
 
 # Define rain volume
 rain_volume_per_cell = 10  # 10 liters of rain per cell
@@ -125,10 +126,10 @@ for i in range(x_grid.shape[0] - 1):
             stopping_point = flood_path[-1]
             
             # Determine the cell in which the stopping point lies
-            cell_x = int((stopping_point[0] - boundary[0]) / grid_size)
-            cell_y = int((stopping_point[1] - boundary[2]) / grid_size)
+            cell_x = min(int((stopping_point[0] - boundary[0]) / grid_size), n_cells - 1)
+            cell_y = min(int((stopping_point[1] - boundary[2]) / grid_size), n_cells - 1)
             
-            if 0 <= cell_x < x_grid.shape[0] - 1 and 0 <= cell_y < y_grid.shape[1] - 1:
+            if 0 <= cell_x < n_cells and 0 <= cell_y < n_cells:
                 water_volume[cell_x, cell_y] += rain_volume_per_cell
 
 # Step 8: Plot the terrain, flood paths, and water volume heatmap
