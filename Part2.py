@@ -108,7 +108,8 @@ water_volume = np.zeros_like(x_grid)
 # Define rain volume
 rain_volume_per_cell = 10  # 10 liters of rain per cell
 
-# Step 7: Simulate and plot flood paths from each grid cell center
+# Step 7: Simulate flood paths from each grid cell center (stored for plotting)
+flood_paths = []
 for i in range(x_grid.shape[0] - 1):
     for j in range(y_grid.shape[1] - 1):
         # Center of the grid cell
@@ -118,6 +119,7 @@ for i in range(x_grid.shape[0] - 1):
         
         # Simulate the flood path for this starting point with boundary check
         flood_path = simulate_flood_path(start_point, tri, gradients, z_values, boundary)
+        flood_paths.append(flood_path)
         
         if flood_path.size > 0:
             stopping_point = flood_path[-1]
@@ -144,17 +146,10 @@ for i in range(x_grid.shape[0]):
 for j in range(y_grid.shape[1]):
     ax.plot(x_grid[:, j], y_grid[:, j], z_grid[:, j], color='black', linestyle='--', linewidth=0.5)
 
-# Plot the flood paths
-for i in range(x_grid.shape[0] - 1):
-    for j in range(y_grid.shape[1] - 1):
-        center_x = (x_grid[i, j] + x_grid[i+1, j] + x_grid[i, j+1] + x_grid[i+1, j+1]) / 4
-        center_y = (y_grid[i, j] + y_grid[i+1, j] + y_grid[i, j+1] + y_grid[i+1, j+1]) / 4
-        start_point = np.array([center_x, center_y])
-        
-        flood_path = simulate_flood_path(start_point, tri, gradients, z_values, boundary)
-        path_z_values = mountain_function(flood_path[:, 0], flood_path[:, 1])
-        
-        ax.plot(flood_path[:, 0], flood_path[:, 1], path_z_values, color='blue', linewidth=1, alpha=0.7)
+# Plot the flood paths (already traced above)
+for flood_path in flood_paths:
+    path_z_values = mountain_function(flood_path[:, 0], flood_path[:, 1])
+    ax.plot(flood_path[:, 0], flood_path[:, 1], path_z_values, color='blue', linewidth=1, alpha=0.7)
 
 ax.set_xlabel('X')
 ax.set_ylabel('Y')
