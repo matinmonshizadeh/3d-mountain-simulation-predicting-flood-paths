@@ -31,6 +31,8 @@ def parse_args(argv=None):
                    help="directory for the PNG figures (default: docs/)")
     p.add_argument("--show", action="store_true",
                    help="also open the figures in a window")
+    p.add_argument("--html", action="store_true",
+                   help="also write an interactive 3D view as HTML (needs plotly)")
     return p.parse_args(argv)
 
 
@@ -48,6 +50,14 @@ def main(argv=None):
     print(f"wettest cell: column {ix}, row {iy} with {result.water.max():.0f} L")
     for f in files:
         print(f"saved {f}")
+    if args.html:
+        from floodsim.interactive import save_interactive
+        html_path = save_interactive(
+            result, args.out, title=f"3D terrain with flood paths ({args.terrain})")
+        print(f"saved {html_path}")
+        if args.show:
+            import webbrowser
+            webbrowser.open(html_path.resolve().as_uri())
 
 
 if __name__ == "__main__":

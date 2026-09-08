@@ -46,7 +46,7 @@ python run.py --terrain ridges --points 800 --grid 20 --seed 7 --out output/ridg
 python run.py --terrain perlin --seed 3 --out output/perlin --show
 ```
 
-`--show` also opens the figures in a window. Run `python run.py --help` for all options.
+`--show` also opens the figures in a window. While you drag to rotate the 3D view only the grid and the paths are drawn, because Matplotlib re-projects every triangle on each mouse move; the surface and axes reappear when you release the button. For a fully rendered 3D view that rotates smoothly in the browser add `--html` (needs `pip install plotly==5.24.0`); it writes `terrain_flood_paths.html` next to the PNGs and, together with `--show`, opens it in your browser. Run `python run.py --help` for all options.
 
 **Experimental: real elevation data.** `examples/run_on_dem.py` crops a window from an SRTM GeoTIFF tile, normalises it to the unit square and runs the unchanged pipeline on it. It needs `rasterio` (`pip install rasterio==1.3.11`) and a tile downloaded from the USGS EarthExplorer or OpenTopography (SRTM 1 Arc-Second Global; tile N29E052 covers Shiraz). The default window is the Derak mountain north-west of Shiraz:
 
@@ -67,6 +67,7 @@ src/floodsim/terrain.py   the eight terrain functions and point sampling
 src/floodsim/mesh.py      Delaunay triangulation, per-triangle plane fit
 src/floodsim/flow.py      flood-path tracing, water accumulation on the grid
 src/floodsim/plot.py      3D terrain with paths, water heatmap (saved as PNG)
+src/floodsim/interactive.py  optional plotly export of the 3D view as HTML
 examples/run_on_dem.py    experimental run on a real SRTM tile
 docs/                     thesis.pdf and the generated figures
 ```
