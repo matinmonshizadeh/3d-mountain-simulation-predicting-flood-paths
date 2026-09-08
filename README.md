@@ -85,17 +85,3 @@ The original thesis scripts (`Part1.py`, `Part2.py`) are kept in the git history
 ## License
 
 MIT, see [LICENSE](LICENSE).
-
-## Citation
-
-```bibtex
-@thesis{monshizadeh2024flood,
-  author = {Monshizadeh, Matin},
-  title  = {3D Mountain Simulation with Flood Paths and Accumulated Water Volume},
-  type   = {Bachelor's thesis},
-  school = {Shiraz University},
-  year   = {2024},
-  note   = {Supervisor: Mohammad Taheri},
-  url    = {https://github.com/matinmonshizadeh/3d-mountain-simulation-predicting-flood-paths}
-}
-```
