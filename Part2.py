@@ -1,6 +1,12 @@
+import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.spatial import Delaunay
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--seed', type=int, default=42, help='random seed for the 2D point sampling')
+args = parser.parse_args()
+np.random.seed(args.seed)
 
 # Step 1: Generate random points in 2D space
 num_points = 400
