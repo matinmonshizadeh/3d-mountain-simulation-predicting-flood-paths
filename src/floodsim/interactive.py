@@ -10,7 +10,7 @@ from pathlib import Path
 
 import numpy as np
 
-from .flow import UNIT_SQUARE, cell_edges
+from .flow import cell_edges
 
 INTERACTIVE_FIGURE = "terrain_flood_paths.html"
 

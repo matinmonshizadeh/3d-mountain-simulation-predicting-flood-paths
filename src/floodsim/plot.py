@@ -34,14 +34,15 @@ def plot_terrain_with_paths(ax, points, z, tri, height_fn, paths,
     grid_segments += [np.c_[x_grid[:, j], y_grid[:, j], z_grid[:, j]]
                       for j in range(x_grid.shape[1])]
     ax.add_collection3d(Line3DCollection(
-        grid_segments, colors="black", linestyles="--", linewidths=0.5),
+        grid_segments, colors="black", linestyles="--", linewidths=0.5,
+        alpha=0.3),
         autolim=False)
 
     path_segments = [np.c_[path[:, 0], path[:, 1],
                            height_fn(path[:, 0], path[:, 1])]
                      for path in paths]
     ax.add_collection3d(Line3DCollection(
-        path_segments, colors="blue", linewidths=1, alpha=0.7),
+        path_segments, colors="blue", linewidths=1.5, alpha=0.7),
         autolim=False)
 
     ax.set_xlabel("X")
